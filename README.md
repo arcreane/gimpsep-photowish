@@ -1,0 +1,2 @@
+# photoWish
+C++ project

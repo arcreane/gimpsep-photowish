@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+        <file>resources/icons/brightness.png</file>
+        <file>resources/icons/contrast.png</file>
+        <file>resources/icons/resize.png</file>
+        <file>resources/icons/filter.png</file>
+        <file>resources/icons/panorama.png</file>
+        <file>resources/icons/scissors.png</file>
+    </qresource>
+</RCC>
