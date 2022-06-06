@@ -1,0 +1,32 @@
+#pragma once
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+#include <string>
+
+using namespace cv;
+using namespace std;
+
+
+//int uiGimp();
+int consoleGimp();
+
+int resizing();
+int dimensionsResizing(Mat image);
+int factorResizing(Mat image);
+
+int contrast();
+int changeBrightness(Mat image);
+int changeContrast(Mat image);
+
+int dilation_erosion();
+int erosion(Mat image);
+int dilation(Mat image);
+
+int Stitching();
+int cannyEdgesDetection();
+
+void saveImage(Mat image);
+
+int faceDetection();
