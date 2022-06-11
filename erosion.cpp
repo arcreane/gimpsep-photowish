@@ -34,16 +34,18 @@ int erosion(Mat image) {
 
 	//test image path: C:/Users/arthu/Desktop/Ecole/AppMultimedia/C++/crocodile.png
 
-
+	string white = getColor("white");
+	string blue = getColor("blue");
+	string red = getColor("red");
 	srcImage = image;
 
-	cout << "\033[0m" << "\nWhat is the erosion element ? (between 0 and 2)\n";
-	cout << "\033[0m" << "[ 1: Rectangle | 2: Cross | 3: Ellipse ]\n";
-	cout << "\033[0m"  << "Erosion element : ";
+	cout << white << "\nWhat is the erosion element ? (between 0 and 2)\n";
+	cout << white << "[ 1: Rectangle | 2: Cross | 3: Ellipse ]\n";
+	cout << white  << "Erosion element : ";
 	cin >> erosion_elem;
 
-	cout << "\033[0m"  << "\nWhat is the erosion size ? (between 0 and 21)\n";
-	cout << "\033[0m" << "Erosion size : ";
+	cout << white  << "\nWhat is the erosion size ? (between 0 and 21)\n";
+	cout << white << "Erosion size : ";
 	cin >> erosion_size;
 
 	namedWindow("GimpLike Application", WINDOW_AUTOSIZE);

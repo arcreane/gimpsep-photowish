@@ -27,15 +27,18 @@ string cascadeName;
 
 int faceDetection()
 {
-    
-    string Set[] = { "\033[36m", "\033[0m", "\033[0m"};
+    string white = getColor("white");
+    string blue = getColor("blue");
+    string red = getColor("red");
+
+    string Set[] = { blue, white, white};
     int counter = 0;
     char key;
 
     for (int i = 0; ; ) {
         
         gotoxy(0, 2);
-        cout << "\033[0m" << "\nHow would you like to use Face Detection \n";
+        cout << white << "\nHow would you like to use Face Detection \n";
         
         gotoxy(0, 5);
         cout << Set[0] << "1. With the camera";
@@ -74,26 +77,38 @@ int faceDetection()
             }
         }
 
-        Set[0] = "\033[0m";
-        Set[1] = "\033[0m";
-        Set[2] = "\033[0m";
+        Set[0] = white;
+        Set[1] = white;
+        Set[2] = white;
 
         if (counter == 0) {
-            Set[0] = "\033[36m";
+            Set[0] = blue;
         }
         if (counter == 1) {
-            Set[1] = "\033[36m";
+            Set[1] = blue;
         }
         if (counter == 2) {
-            Set[2] = "\033[31m";
+            Set[2] = red;
         }
 
     }
 
+    
+    system("pause");
+
+    destroyAllWindows();
+
+    system("CLS");
+
     return 0;
 }
 
+
 int videoCaptureDetection() {
+
+    string white = getColor("white");
+    gotoxy(0, 2);
+    cout << white << "\nVideo face detection : \n";
     
     cv::VideoCapture video_capture;
     if (!video_capture.open(0)) {
@@ -185,41 +200,69 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
 int fileCaptureDetection() {
 
-    //// 1. Load Haar feature-based cascade classifiers 
-    cv::CascadeClassifier faceCascade{ "./haarcascade_frontalface_default.xml" };
-    cv::CascadeClassifier eyesCascade{ "./haarcascade_eye_tree_eyeglasses.xml" };
+    string white = getColor("white");
 
-    //// 2. Read image and convert to grayscale
-    cv::Mat inputImage{ cv::imread("C:/Users/arthu/Desktop/Ecole/AppMultimedia/C++/gimpLikeApplication/chabal.jpg", cv::IMREAD_COLOR) };
-    cv::Mat inputImageGray;
-    cvtColor(inputImage, inputImageGray, cv::COLOR_BGR2GRAY);
+    gotoxy(0, 0);
+    cout << white << "\nFile face detection : \n";
 
-    //// 3. Find areas with faces using Haar cascade classifier
-    std::vector<cv::Rect> faces;
-    faceCascade.detectMultiScale(inputImageGray, faces);
-    for (size_t i = 0; i < faces.size(); i++) {
-        cv::Point faceCenter{ faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2 };
-        cv::Size halfFace{ faces[i].width / 2, faces[i].height / 2 };
-        // input, center, axes, angle=0, startAngle=0, endAngle=360, color, thickness=2
-        cv::ellipse(inputImage, faceCenter, halfFace, 0, 0, 360, cv::Scalar(255, 0, 255), 2);
-        // Get the region of interest : face rectangle sub-image in gray and colored
-        cv::Mat faceROIGray{ inputImageGray(faces[i]) };
+    Mat imageOrigin;//Declaring a matrix to load image with human faces//
+    String imagePath;
 
-        //// 4. Find areas with eyes in faces using Haar cascade classifier
-        std::vector<cv::Rect> eyes;
-        eyesCascade.detectMultiScale(faceROIGray, eyes);
-        for (size_t j = 0; j < eyes.size(); j++) {
-            cv::Point eyeCenter{ faces[i].x + eyes[j].x + eyes[j].width / 2,
-                                  faces[i].y + eyes[j].y + eyes[j].height / 2 };
-            int radius{ cvRound((eyes[j].width + eyes[j].height) * 0.25) };
-            // input, center, radius, color, thickness=2
-            cv::circle(inputImage, eyeCenter, radius, cv::Scalar(255, 0, 0), 2);
+    while (imageOrigin.empty()) {
+        gotoxy(0, 4);
+        cout << white << "Enter the absolute path of your image : ";
+        cin >> imagePath;
+
+        try
+        {
+            imageOrigin = imread(imagePath);
+
         }
+        catch (const std::exception& e)
+        {
+            cerr << e.what();
+        }
+
     }
 
-    //// 5. Show the output image
-    cv::imshow("Face Detection - OpenCV", inputImage);
-    cv::waitKey();  // Wait Esc key to end program
+    imageOrigin = imread(imagePath);//loading an image that contains human face in it//
+    namedWindow("Face Detection");//Declaring a window to show the result//
+    
+    string trained_classifier_location = "C:/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml";//Defining the location our XML Trained Classifier in a string//
+    CascadeClassifier faceDetector;//Declaring an object named 'face detector' of CascadeClassifier class//
+    faceDetector.load(trained_classifier_location);//loading the XML trained classifier in the object//
+    vector<Rect>faces;//Declaring a rectangular vector named faces//
+    vector<Rect>boundary;//Declaring a rectangular vector named rectangle//
+    faceDetector.detectMultiScale(imageOrigin, faces, 1.1, 4, CASCADE_SCALE_IMAGE, Size(20, 20));//Detecting the faces in 'imageOrigins' matrix//
+    for (size_t i = 0; i < faces.size(); i++) { //Loop to draw rectangle around the faces//
+        Mat faceROI = imageOrigin(faces[i]);//Storing the face in a matrix//
+        int x = faces[i].x;//Getting the initial row value of face rectangle's starting point//
+        int y = faces[i].y;//Getting the initial column value of face rectangle's starting point//
+        int h = y + faces[i].height;//Calculating the height of the rectangle//
+        int w = x + faces[i].width;//Calculating the width of the rectangle//
+        rectangle(imageOrigin, Point(x, y), Point(w, h), Scalar(255, 0, 255), 2, 8, 0);//Drawing a rectangle using around the faces//
+    }
+        
+    Mat imageCopy = imageOrigin;
+    float resizingFactor = 1;
+
+    while (imageCopy.cols * resizingFactor > 500 && imageCopy.rows * resizingFactor > 500) {
+        resizingFactor -= 0.1;
+    }
+
+    imageCopy = resizeMethod(imageCopy,resizingFactor * imageCopy.rows, resizingFactor * imageCopy.cols, resizingFactor, resizingFactor);
+    imshow("Face Detection", imageCopy);//Showing the detected face//
+   
+
+    waitKey(0);//To wait for keystroke to terminate the program//
+
+    saveImage(imageOrigin);
+
+    system("pause");
+
+    destroyAllWindows();
+
+    system("CLS");
 
     return 0;
 }

@@ -15,6 +15,7 @@ int consoleGimp();
 int resizing();
 int dimensionsResizing(Mat image);
 int factorResizing(Mat image);
+Mat resizeMethod(Mat image, float height, float width, float heightFactor, float widthFactor);
 
 int contrast();
 int changeBrightness(Mat image);

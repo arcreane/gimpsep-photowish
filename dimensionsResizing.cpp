@@ -11,21 +11,22 @@ int dimensionsResizing(Mat image) {
 
 	//test image path: C:/Users/arthu/Desktop/Ecole/AppMultimedia/C++/crocodile.png
 
+	string white = getColor("white");
+	string blue = getColor("blue");
+	string red = getColor("red");
 	Mat modifiedImage;
 	float height, width;
-	string saving, savingPath, imageName;
 
 	gotoxy(0, 11);
-	cout << "\033[0m" << "\nEnter the new sizes : \n";
-	cout << "\033[0m" << "Height : ";
+	cout << white << "\nEnter the new sizes : \n";
+	cout << white << "Height : ";
 	cin >> height;
-	cout << "\033[0m" << "Width : ";
+	cout << white << "Width : ";
 	cin >> width;
 	
 
 	// Scaling the image with the new dimensions
-	resize(image, modifiedImage, Size(round(height),
-		round(width)), height, width, INTER_LINEAR);
+	modifiedImage = resizeMethod(image, height, width, 0, 0);
 	imshow("GimpLike Application", modifiedImage);
 	waitKey(0);
 

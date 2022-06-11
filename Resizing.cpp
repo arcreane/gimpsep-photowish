@@ -10,16 +10,20 @@ using namespace cv;
 
 int resizing() {
 
+    string white = getColor("white");
+    string blue = getColor("blue");
+    string red = getColor("red");
+
     Mat imageOrigin;
     string imagePath;
 
-    string Set[] = { "\033[36m", "\033[0m", "\033[0m" };
+    string Set[] = { blue, white, white };
     int counter = 0;
     char key;
 
     while (imageOrigin.empty()) {
         gotoxy(0, 3);
-        cout << "\033[0m"<< "Enter the absolute path of your image : ";
+        cout << white << "Enter the absolute path of your image : ";
         cin >> imagePath;
 
         try
@@ -42,7 +46,7 @@ int resizing() {
     for (int i = 0; ; ) {
 
         gotoxy(0, 5);
-        cout << "\033[0m" << "How would you like to resize your image ?\n";
+        cout << white << "How would you like to resize your image ?\n";
 
         gotoxy(0, 6);
         cout << Set[0] << "1. With a factor";
@@ -70,13 +74,13 @@ int resizing() {
             {
             case 0: //factor resizing
                 gotoxy(0, 10);
-                cout << "\033[0m" << "\nFactor :\n";
+                cout << white << "\nFactor :\n";
                 factorResizing(imageOrigin);
                 break;
 
             case 1: //dimensions resizing
                 gotoxy(0, 10);
-                cout << "\033[0m" << "\nDimensions :\n";
+                cout << white << "\nDimensions :\n";
                 dimensionsResizing(imageOrigin);
                 break;
 
@@ -93,22 +97,22 @@ int resizing() {
 
         }
 
-        Set[0] = "\033[0m";
-        Set[1] = "\033[0m";
-        Set[2] = "\033[0m";
+        Set[0] = white;
+        Set[1] = white;
+        Set[2] = white;
 
         switch (counter)
         {
         case 0:
-            Set[0] = "\033[36m";
+            Set[0] = blue;
             break;
 
         case 1:
-            Set[1] = "\033[36m";
+            Set[1] = blue;
             break;
 
         case 2:
-            Set[2] = "\033[31m";
+            Set[2] = red;
             break;
 
         default:

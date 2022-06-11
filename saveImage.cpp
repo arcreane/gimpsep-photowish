@@ -8,16 +8,19 @@ using namespace cv;
 
 void saveImage(Mat image) {
 
+	string white = getColor("white");
+	string blue = getColor("blue");
+	string red = getColor("red");
 	string saving, savingPath, imageName;
 
-	cout << "\033[0m" << "\nWould you like to save this new image ? (Yes/No) ";
+	cout << white << "\nWould you like to save this new image ? (Yes/No) ";
 	cin >> saving;
 
 	if (saving.compare("yes") == 0) {
-		cout << "\033[0m" << "\nEnter the saving path : ";
+		cout << white << "\nEnter the saving path : ";
 		cin >> savingPath;
 
-		cout << "\033[0m" << "\nEnter the image name : ";
+		cout << white << "\nEnter the image name : ";
 		cin >> imageName;
 
 		imwrite(savingPath + imageName, image);

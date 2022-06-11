@@ -21,18 +21,22 @@ vector<Mat> imgs;
 
 int Stitching() {
 
+    string white = getColor("white");
+    string blue = getColor("blue");
+    string red = getColor("red");
+
     string folderPath, currentFile;
     int numberOfFiles = 0, i=0;
     
     gotoxy(0, 3);
-    cout << "\033[0m" << "\nEnter the folder path : ";
+    cout << white << "\nEnter the folder path : ";
     cin >> folderPath;
 
     string listOfFiles[100];
 
     while(currentFile != "&") {
-        cout << "\033[0m" << "\nEnter the name of the " << i+1 << " : (enter & key to end)\n";
-        cout << "\033[0m" << "Name : ";
+        cout << white << "\nEnter the name of the " << i+1 << " : (enter & key to end)\n";
+        cout << white << "Name : ";
         cin >> currentFile;
         listOfFiles[i] = folderPath + "\\" + currentFile;
         numberOfFiles = i;
@@ -54,7 +58,7 @@ int Stitching() {
         if (img.empty())
         {
             // Exit if image is not present
-            cout << "\033[0m" << "Can't read image '" << listOfFiles[i] << "\n";
+            cout << white << "Can't read image '" << listOfFiles[i] << "\n";
 
             system("pause");
             destroyAllWindows();
@@ -78,7 +82,7 @@ int Stitching() {
     {
         // Check if images could not be stitched
         // status is OK if images are stitched successfully
-        cout << "\033[0m" << "\n\nCan't stitch images\n";
+        cout << white << "\n\nCan't stitch images\n";
 
         system("pause");
         destroyAllWindows();
