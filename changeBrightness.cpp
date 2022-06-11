@@ -15,20 +15,19 @@ int changeBrightness(Mat image) {
     string white = getColor("white");
     string blue = getColor("blue");
     string red = getColor("red");
-    //asking for alpha 
-    float alpha = 0;
+    int beta = 0;
 
     gotoxy(0, 11);
-    cout << white << "\nEnter the brightness factor : ";
-    cout << white << "[alpha > 1 means to increase the brightness and alpha < 1 means to reduce the brightness]\n";
-    cout << white << "\nalpha : ";
-    cin >> alpha;
+    cout << white << "\nEnter the contrast factor : ";
+    cout << white << "[Beta = [0 - 100]\n";
+    cout << white << "\nBeta : ";
+    cin >> beta;
 
     for (int y = 0; y < image.cols; y++) {
         for (int x = 0; x < image.rows; x++) {
             for (int c = 0; c < 2; c++) {
                 modifiedImage.at<Vec3b>(y, x)[c] =
-                    saturate_cast<uchar>(alpha * (image.at<Vec3b>(y, x)[c]));
+                    saturate_cast<uchar>((image.at<Vec3b>(y, x)[c]) + beta);
             }
         }
     }
