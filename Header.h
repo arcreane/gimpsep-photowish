@@ -1,6 +1,8 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <Windows.h>
+#include <conio.h>
 #include <string>
 
 using namespace cv;

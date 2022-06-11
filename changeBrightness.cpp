@@ -11,7 +11,7 @@ int changeBrightness(Mat image) {
 
     //test image path: C:/Users/arthu/Desktop/Ecole/AppMultimedia/C++/crocodile.png
 
-    Mat modifiedImage = Mat::zeros(image.size(), CV_8UC3);;
+    Mat modifiedImage = Mat::zeros(image.size(), image.type());
     string white = getColor("white");
     string blue = getColor("blue");
     string red = getColor("red");
@@ -23,11 +23,11 @@ int changeBrightness(Mat image) {
     cout << white << "\nBeta : ";
     cin >> beta;
 
-    for (int y = 0; y < image.cols; y++) {
-        for (int x = 0; x < image.rows; x++) {
-            for (int c = 0; c < 2; c++) {
+    for (int y = 0; y < image.rows; y++) {
+        for (int x = 0; x < image.cols; x++) {
+            for (int c = 0; c < image.channels(); c++) {
                 modifiedImage.at<Vec3b>(y, x)[c] =
-                    saturate_cast<uchar>((image.at<Vec3b>(y, x)[c]) + beta);
+                    saturate_cast<uchar>(image.at<Vec3b>(y, x)[c] + beta);
             }
         }
     }

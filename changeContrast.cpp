@@ -10,12 +10,12 @@ int changeContrast(Mat image) {
 
     //test image path: C:/Users/arthu/Desktop/Ecole/AppMultimedia/C++/crocodile.png
 
-    Mat modifiedImage = Mat::zeros(image.size(), CV_8UC3);//Declaring a matrix to load the image after changing the brightness//
+    Mat modifiedImage = Mat::zeros(image.size(), image.type()); 
     string white = getColor("white");
     string blue = getColor("blue");
     string red = getColor("red");
     //asking for alpha 
-    float alpha = 0;
+    double alpha = 0;
 
     gotoxy(0, 11);
     cout << white << "\nEnter the brightness factor : ";
@@ -23,11 +23,11 @@ int changeContrast(Mat image) {
     cout << white << "\nalpha : ";
     cin >> alpha;
 
-    for (int y = 0; y < image.cols; y++) {
-        for (int x = 0; x < image.rows; x++) {
-            for (int c = 0; c < 2; c++) {
+    for (int y = 0; y < image.rows; y++) {
+        for (int x = 0; x < image.cols; x++) {
+            for (int c = 0; c < image.channels(); c++) {
                 modifiedImage.at<Vec3b>(y, x)[c] =
-                    saturate_cast<uchar>(alpha * (image.at<Vec3b>(y, x)[c]));
+                    saturate_cast<uchar>(alpha * image.at<Vec3b>(y, x)[c]);
             }
         }
     }
