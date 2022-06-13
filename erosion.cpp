@@ -68,5 +68,9 @@ int erosion(Mat image) {
 
 	system("CLS");
 
+	erodedImage.release();
+	srcImage.release();
+
+
 	return 0;
 }

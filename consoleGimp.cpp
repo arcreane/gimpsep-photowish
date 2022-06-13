@@ -42,7 +42,7 @@ int consoleGimp() {
         cout << Set[5] << "6. Face Detection";
 
         gotoxy(0, 9);
-        cout << Set[6] << "6. Return";
+        cout << Set[6] << "7. Return";
 
 
         key = _getch();

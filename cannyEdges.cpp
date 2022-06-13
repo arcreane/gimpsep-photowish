@@ -67,13 +67,18 @@ int cannyEdgesDetection() {
     CannyThreshold(0, 0);
     waitKey(0);
 
-    saveImage(src_gray);
+    saveImage(dst);
 
     system("pause");
 
     destroyAllWindows();
 
     system("CLS");
+
+    imageOrigin.release();
+    src_gray.release();
+    dst.release();
+    detected_edges.release();
 
     return 0;
 

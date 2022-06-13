@@ -31,7 +31,7 @@ int faceDetection()
     string blue = getColor("blue");
     string red = getColor("red");
 
-    string Set[] = { blue, white, white};
+    string Set[] = { blue, white, white };
     int counter = 0;
     char key;
 
@@ -105,7 +105,6 @@ int faceDetection()
 
 
 int videoCaptureDetection() {
-
     string white = getColor("white");
     gotoxy(0, 2);
     cout << white << "\nVideo face detection : \n";
@@ -114,13 +113,11 @@ int videoCaptureDetection() {
     if (!video_capture.open(0)) {
         return 0;
     }
-
     // PreDefined trained XML classifiers with facial features
     CascadeClassifier cascade;
     double scale = 1;
     // Change path before execution 
     cascade.load("./haarcascade_frontalcatface_default.xml");
-
 
     cv::Mat frame;
     while (true) {
@@ -136,8 +133,6 @@ int videoCaptureDetection() {
         // Press q to exit from window
         if (c == 27 || c == 'q' || c == 'Q')
             break;
-        
-
     }
 
     destroyAllWindows();
@@ -174,17 +169,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
         Scalar color = Scalar(255, 0, 0); // Color for Drawing tool
         int radius;
 
-        /*
-        double aspect_ratio = (double)r.width / r.height;
-        if (0.75 < aspect_ratio && aspect_ratio < 1.3)
-        {
-            center.x = cvRound((r.x + r.width * 0.5) * scale);
-            center.y = cvRound((r.y + r.height * 0.5) * scale);
-            radius = cvRound((r.width + r.height) * 0.25 * scale);
-            circle(img, center, radius, color, 3, 8, 0);
-        }
-        else
-        */
         rectangle(img, cvPoint(cvRound(r.x * scale), cvRound(r.y * scale)),
                 cvPoint(cvRound((r.x + r.width - 1) * scale),
                     cvRound((r.y + r.height - 1) * scale)), color, 2, 8, 0);
@@ -228,16 +212,19 @@ int fileCaptureDetection() {
     imageOrigin = imread(imagePath);//loading an image that contains human face in it//
     namedWindow("Face Detection");//Declaring a window to show the result//
     
-    string trained_classifier_location = "C:/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml";//Defining the location our XML Trained Classifier in a string//
-    CascadeClassifier faceDetector;//Declaring an object named 'face detector' of CascadeClassifier class//
-    faceDetector.load(trained_classifier_location);//loading the XML trained classifier in the object//
-    vector<Rect>faces;//Declaring a rectangular vector named faces//
-    vector<Rect>boundary;//Declaring a rectangular vector named rectangle//
-    faceDetector.detectMultiScale(imageOrigin, faces, 1.1, 4, CASCADE_SCALE_IMAGE, Size(20, 20));//Detecting the faces in 'imageOrigins' matrix//
-    for (size_t i = 0; i < faces.size(); i++) { //Loop to draw rectangle around the faces//
+    string trained_classifier_location = "C:/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml";
+    CascadeClassifier faceDetector;
+
+    faceDetector.load(trained_classifier_location);
+    vector<Rect>faces;
+    vector<Rect>boundary;
+
+
+    faceDetector.detectMultiScale(imageOrigin, faces, 1.1, 4, CASCADE_SCALE_IMAGE, Size(20, 20));
+    for (size_t i = 0; i < faces.size(); i++) { 
         Mat faceROI = imageOrigin(faces[i]);//Storing the face in a matrix//
-        int x = faces[i].x;//Getting the initial row value of face rectangle's starting point//
-        int y = faces[i].y;//Getting the initial column value of face rectangle's starting point//
+        int x = faces[i].x;
+        int y = faces[i].y;
         int h = y + faces[i].height;//Calculating the height of the rectangle//
         int w = x + faces[i].width;//Calculating the width of the rectangle//
         rectangle(imageOrigin, Point(x, y), Point(w, h), Scalar(255, 0, 255), 2, 8, 0);//Drawing a rectangle using around the faces//

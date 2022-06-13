@@ -67,5 +67,8 @@ int dilation(Mat image) {
 
 	system("CLS");
 
+	dilatedImage.release();
+	imageSrc.release();
+
 	return 0;
 }
